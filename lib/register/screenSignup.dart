@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 // ignore: camel_case_types
-class screenIntro extends StatefulWidget {
-  const screenIntro({super.key});
+class screenSignup extends StatefulWidget {
+  const screenSignup({super.key});
 
   @override
-  State<screenIntro> createState() => screenIntroState();
+  State<screenSignup> createState() => screenSignupState();
 }
 
 // ignore: camel_case_types
-class screenIntroState extends State<screenIntro> {
+class screenSignupState extends State<screenSignup> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +25,7 @@ class screenIntroState extends State<screenIntro> {
               const Row(
                 children: [
                   Text(
-                    "Welcome",
+                    "Sign Up",
                     style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.w900,
@@ -33,15 +33,11 @@ class screenIntroState extends State<screenIntro> {
                   )
                 ],
               ),
-              const Row(
-                children: [
-                  Text(
-                    "Please login or sign up to continue using our app",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(10, 59, 83, 1)),
-                  )
-                ],
+              const Text(
+                "Please Registration with email and sign up to continue using our app",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(10, 59, 83, 1)),
               ),
               const Spacer(),
               SizedBox(
@@ -52,7 +48,7 @@ class screenIntroState extends State<screenIntro> {
               const Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  // Add your onPressed logic here
+                  print("Sign Up Success!");
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -88,7 +84,12 @@ class screenIntroState extends State<screenIntro> {
                         fontWeight: FontWeight.bold,
                         color: Color.fromRGBO(10, 59, 83, 1)),
                   ),
-                  TextButton(onPressed: () {}, child: const Text("Login"))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, 'signIn', (route) => false);
+                      },
+                      child: const Text("Login"))
                 ],
               )
             ],

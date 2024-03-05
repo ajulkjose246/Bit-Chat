@@ -1,4 +1,6 @@
-import 'package:bitchat/register/signupScreen.dart';
+import 'package:bitchat/register/screenIntro.dart';
+import 'package:bitchat/register/screenSignin.dart';
+import 'package:bitchat/register/screenSignup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => screenIntro(),
+        'signIn': (context) => screenSignin(),
+        'signUp': (context) => screenSignup(),
       },
       initialRoute: '/',
     );
