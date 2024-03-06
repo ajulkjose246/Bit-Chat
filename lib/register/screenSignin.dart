@@ -1,7 +1,10 @@
 // ignore_for_file: file_names
 
+import 'package:bitchat/register/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
+import '../components/myTextfield.dart';
 
 // ignore: camel_case_types
 class screenSignin extends StatefulWidget {
@@ -13,19 +16,40 @@ class screenSignin extends StatefulWidget {
 
 // ignore: camel_case_types
 class screenSigninState extends State<screenSignin> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  // signin user function
+  void signIn(BuildContext context) async {
+    final authService = AuthService();
+    try {
+      await authService.signInWithEmailandPassword(
+          emailController.text, passwordController.text);
+      Navigator.pushReplacementNamed(context, 'auth');
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(40),
+        child: Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(left: 40, right: 40, top: 40),
+        child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             children: [
-              const Spacer(),
               const Row(
                 children: [
                   Text(
-                    "Login Now",
+                    "Sign In",
                     style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.w900,
@@ -33,23 +57,32 @@ class screenSigninState extends State<screenSignin> {
                   )
                 ],
               ),
+              const SizedBox(height: 10),
               const Text(
                 "Please login to continue using our app",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(10, 59, 83, 1)),
               ),
-              const Spacer(),
               SizedBox(
                 width: 500,
                 height: 500,
                 child: Lottie.asset('assets/lottie/login.json'),
               ),
-              const Spacer(),
+              myTextfield(
+                controller: emailController,
+                hintText: "Email",
+                obsecuredText: false,
+              ),
+              const SizedBox(height: 10),
+              myTextfield(
+                controller: passwordController,
+                hintText: "Password",
+                obsecuredText: true,
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  print("Login Success");
-                },
+                onPressed: () => signIn(context),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.blue), // Set button background color
@@ -96,6 +129,6 @@ class screenSigninState extends State<screenSignin> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

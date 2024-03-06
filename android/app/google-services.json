@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "92016110783",
+    "project_id": "bit-chat--v1",
+    "storage_bucket": "bit-chat--v1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92016110783:android:49a11d8f253439ce956a0a",
+        "android_client_info": {
+          "package_name": "com.example.bitchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8TaFR3oPiNYFifwPSyjKXvWaBPhGeEkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

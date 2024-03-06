@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:bitchat/components/myTextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,15 +14,26 @@ class screenSignup extends StatefulWidget {
 
 // ignore: camel_case_types
 class screenSignupState extends State<screenSignup> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmpasswordController = TextEditingController();
+
+  // signup user function
+  void signUp() {}
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(40),
+        child: Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 40,
+          right: 40,
+          top: 40,
+        ),
+        child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             children: [
-              const Spacer(),
               const Row(
                 children: [
                   Text(
@@ -33,23 +45,38 @@ class screenSignupState extends State<screenSignup> {
                   )
                 ],
               ),
+              const SizedBox(height: 10),
               const Text(
                 "Please Registration with email and sign up to continue using our app",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(10, 59, 83, 1)),
               ),
-              const Spacer(),
               SizedBox(
-                width: 500,
-                height: 500,
+                width: 400,
+                height: 400,
                 child: Lottie.asset('assets/lottie/login.json'),
               ),
-              const Spacer(),
+              myTextfield(
+                controller: emailController,
+                hintText: "Email",
+                obsecuredText: false,
+              ),
+              const SizedBox(height: 10),
+              myTextfield(
+                controller: passwordController,
+                hintText: "Password",
+                obsecuredText: true,
+              ),
+              const SizedBox(height: 10),
+              myTextfield(
+                controller: confirmpasswordController,
+                hintText: "Confirm Password",
+                obsecuredText: true,
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  print("Sign Up Success!");
-                },
+                onPressed: signUp,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.blue), // Set button background color
@@ -96,6 +123,6 @@ class screenSignupState extends State<screenSignup> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

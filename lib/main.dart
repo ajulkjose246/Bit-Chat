@@ -1,9 +1,17 @@
 import 'package:bitchat/register/screenIntro.dart';
 import 'package:bitchat/register/screenSignin.dart';
 import 'package:bitchat/register/screenSignup.dart';
+import 'package:bitchat/register/userAuth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -20,8 +28,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => screenIntro(),
         'signIn': (context) => screenSignin(),
         'signUp': (context) => screenSignup(),
+        'auth': (context) => userAuth(),
       },
-      initialRoute: '/',
+      initialRoute: 'auth',
     );
   }
 }
