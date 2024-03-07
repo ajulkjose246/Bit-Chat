@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:bitchat/components/myTextfield.dart';
+import 'package:bitchat/register/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -19,7 +20,31 @@ class screenSignupState extends State<screenSignup> {
   final confirmpasswordController = TextEditingController();
 
   // signup user function
-  void signUp() {}
+  void signUp(BuildContext context) async {
+    final authService = AuthService();
+    if (passwordController.text == confirmpasswordController.text) {
+      try {
+        await authService.signUpWithEmailandPassword(
+            emailController.text, passwordController.text);
+        Navigator.pushReplacementNamed(context, 'auth');
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Password don't match"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,7 +101,7 @@ class screenSignupState extends State<screenSignup> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: signUp,
+                onPressed: () => signUp(context),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.blue), // Set button background color
