@@ -1,10 +1,12 @@
+// ignore_for_file: file_names
+
 import 'package:bitchat/components/user_tile.dart';
 import 'package:bitchat/home/pages/chatPage.dart';
 import 'package:bitchat/services/auth_service.dart';
 import 'package:bitchat/services/chat_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class pageChatList extends StatefulWidget {
   const pageChatList({super.key});
 
@@ -12,9 +14,10 @@ class pageChatList extends StatefulWidget {
   State<pageChatList> createState() => _pageChatListState();
 }
 
+// ignore: camel_case_types
 class _pageChatListState extends State<pageChatList> {
-  ChatService _chatService = ChatService();
-  AuthService _authService = AuthService();
+  final ChatService _chatService = ChatService();
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +70,7 @@ class _pageChatListState extends State<pageChatList> {
               MaterialPageRoute(
                 builder: (context) => ChatPage(
                   receiverEmail: userData['email'],
+                  receiverId: userData['uid'],
                 ),
               ));
         },

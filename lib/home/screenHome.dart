@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:bitchat/home/pages/chatList.dart';
+import 'package:bitchat/home/pages/settingsPage.dart';
 import 'package:bitchat/services/auth_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,7 @@ class _screenHomeState extends State<screenHome> {
     Text(
       'Likes',
     ),
-    Text(
-      'Search',
-    ),
+    pageSettings(),
     Text(
       'Profile',
     ),
@@ -38,7 +37,7 @@ class _screenHomeState extends State<screenHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(221, 241, 238, 1),
+      // backgroundColor: const Color.fromRGBO(221, 241, 238, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(36, 106, 128, 1),
         title: const Text(
@@ -54,9 +53,7 @@ class _screenHomeState extends State<screenHome> {
           )
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: bottomNavBar(),
     );
   }
@@ -96,8 +93,8 @@ class _screenHomeState extends State<screenHome> {
                 text: 'Likes',
               ),
               GButton(
-                icon: Icons.search,
-                text: 'Search',
+                icon: Icons.settings,
+                text: 'Settings',
               ),
               GButton(
                 icon: Icons.person,
