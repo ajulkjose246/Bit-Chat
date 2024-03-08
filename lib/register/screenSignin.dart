@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:bitchat/register/auth_service.dart';
+import 'package:bitchat/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

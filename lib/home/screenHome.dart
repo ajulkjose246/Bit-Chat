@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:bitchat/register/auth_service.dart';
+import 'package:bitchat/home/pages/chatList.dart';
+import 'package:bitchat/services/auth_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,7 @@ class _screenHomeState extends State<screenHome> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Chats',
-    ),
+    pageChatList(),
     Text(
       'Likes',
     ),
