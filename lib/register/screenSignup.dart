@@ -26,9 +26,11 @@ class screenSignupState extends State<screenSignup> {
       try {
         await authService.signUpWithEmailandPassword(
             emailController.text, passwordController.text);
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, 'auth');
       } catch (e) {
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (context) => AlertDialog(
             title: Text(e.toString()),
@@ -38,7 +40,7 @@ class screenSignupState extends State<screenSignup> {
     } else {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
+        builder: (context) => const AlertDialog(
           title: Text("Password don't match"),
         ),
       );
