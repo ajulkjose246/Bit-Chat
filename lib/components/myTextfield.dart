@@ -21,9 +21,10 @@ class myTextfield extends StatelessWidget {
       focusNode: focusNode,
       decoration: InputDecoration(
           hintText: hintText,
-          enabledBorder: OutlineInputBorder(
+          hintStyle: const TextStyle(color: Color.fromRGBO(112, 124, 132, 1)),
+          enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15)))),
     );
   }

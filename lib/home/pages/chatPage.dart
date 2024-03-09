@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:bitchat/components/chat_bubble.dart';
 import 'package:bitchat/components/myTextfield.dart';
 import 'package:bitchat/services/auth_service.dart';
@@ -8,7 +10,8 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverId;
-  ChatPage({super.key, required this.receiverEmail, required this.receiverId});
+  const ChatPage(
+      {super.key, required this.receiverEmail, required this.receiverId});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -23,28 +26,26 @@ class _ChatPageState extends State<ChatPage> {
   final AuthService _authService = AuthService();
 
   //textfield focus
-
   FocusNode myFocusNode = FocusNode();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //add a listener to focus
     myFocusNode.addListener(() {
       if (myFocusNode.hasFocus) {
         Future.delayed(
-          Duration(milliseconds: 500),
+          const Duration(milliseconds: 500),
           () => scrollDown(),
         );
       }
     });
 
-    Future.delayed(Duration(milliseconds: 500), () => scrollDown());
+    Future.delayed(const Duration(milliseconds: 500), () => scrollDown());
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     myFocusNode.dispose();
     _messageController.dispose();
     super.dispose();
@@ -55,7 +56,7 @@ class _ChatPageState extends State<ChatPage> {
   void scrollDown() {
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -75,7 +76,6 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(233, 229, 225, 1),
       appBar: AppBar(
         title: Text(widget.receiverEmail),
       ),

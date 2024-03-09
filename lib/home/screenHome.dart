@@ -2,7 +2,6 @@
 
 import 'package:bitchat/home/pages/chatList.dart';
 import 'package:bitchat/home/pages/settingsPage.dart';
-import 'package:bitchat/services/auth_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -23,16 +22,11 @@ class _screenHomeState extends State<screenHome> {
     Text(
       'Likes',
     ),
-    pageSettings(),
     Text(
       'Profile',
     ),
+    pageSettings(),
   ];
-
-  void logOut() {
-    final auth = AuthService();
-    auth.signOut();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +38,6 @@ class _screenHomeState extends State<screenHome> {
           "Bit-Chat",
           style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            onPressed: logOut,
-            icon: const Icon(Icons.logout),
-            style: const ButtonStyle(
-                iconColor: MaterialStatePropertyAll(Colors.white)),
-          )
-        ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: bottomNavBar(),
@@ -61,7 +47,10 @@ class _screenHomeState extends State<screenHome> {
   Container bottomNavBar() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        // color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Colors.grey.withOpacity(.1)),
+        ),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         boxShadow: [
           BoxShadow(
@@ -93,12 +82,12 @@ class _screenHomeState extends State<screenHome> {
                 text: 'Likes',
               ),
               GButton(
-                icon: Icons.settings,
-                text: 'Settings',
-              ),
-              GButton(
                 icon: Icons.person,
                 text: 'Profile',
+              ),
+              GButton(
+                icon: Icons.settings,
+                text: 'Settings',
               ),
             ],
             selectedIndex: _selectedIndex,

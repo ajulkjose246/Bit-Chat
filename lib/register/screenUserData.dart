@@ -1,60 +1,27 @@
 // ignore_for_file: file_names
+
 import 'dart:typed_data';
 
 import 'package:bitchat/components/imageSelect.dart';
 import 'package:bitchat/components/myTextfield.dart';
-import 'package:bitchat/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 // ignore: camel_case_types
-class screenSignup extends StatefulWidget {
-  const screenSignup({super.key});
+class screenUserData extends StatefulWidget {
+  const screenUserData({super.key});
 
   @override
-  State<screenSignup> createState() => screenSignupState();
+  State<screenUserData> createState() => _screenUserDataState();
 }
 
 // ignore: camel_case_types
-class screenSignupState extends State<screenSignup> {
+class _screenUserDataState extends State<screenUserData> {
   final emailController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final secondNameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
-  Uint8List? _image;
 
-  // signup user function
-  void signUp(BuildContext context) async {
-    final authService = AuthService();
-    if (passwordController.text == confirmpasswordController.text) {
-      try {
-        await authService.signUpWithEmailandPassword(
-            emailController.text,
-            passwordController.text,
-            firstNameController.text,
-            secondNameController.text,
-            _image!);
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, 'auth');
-      } catch (e) {
-        showDialog(
-          // ignore: use_build_context_synchronously
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(e.toString()),
-          ),
-        );
-      }
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => const AlertDialog(
-          title: Text("Password don't match"),
-        ),
-      );
-    }
-  }
+  Uint8List? _image;
 
   void uploadProfile() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -81,7 +48,7 @@ class screenSignupState extends State<screenSignup> {
               const Row(
                 children: [
                   Text(
-                    "Sign Up",
+                    "Complete Profile",
                     style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.w900,
@@ -89,14 +56,6 @@ class screenSignupState extends State<screenSignup> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
-              const Text(
-                "Please Registration with email and sign up to continue using our app",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(10, 59, 83, 1)),
-              ),
-              const SizedBox(height: 30),
               Stack(
                 children: [
                   _image != null
@@ -121,13 +80,12 @@ class screenSignupState extends State<screenSignup> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                     child: myTextfield(
-                      controller: firstNameController,
+                      controller: emailController,
                       hintText: "First Name",
                       obsecuredText: false,
                     ),
@@ -137,18 +95,12 @@ class screenSignupState extends State<screenSignup> {
                   ),
                   Flexible(
                     child: myTextfield(
-                      controller: secondNameController,
+                      controller: emailController,
                       hintText: "Second Name",
                       obsecuredText: false,
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 10),
-              myTextfield(
-                controller: emailController,
-                hintText: "Email",
-                obsecuredText: false,
               ),
               const SizedBox(height: 10),
               myTextfield(
@@ -164,7 +116,7 @@ class screenSignupState extends State<screenSignup> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => signUp(context),
+                onPressed: () {},
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.blue), // Set button background color
