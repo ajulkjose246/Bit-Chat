@@ -2,6 +2,7 @@
 
 import 'package:bitchat/services/auth_service.dart';
 import 'package:bitchat/themes/theme_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,8 @@ class pageSettings extends StatefulWidget {
 // ignore: camel_case_types
 class pageSettingsState extends State<pageSettings> {
   String? userEmail;
+  String? userProfile;
+  String? fullName;
 
   @override
   void initState() {
@@ -28,10 +31,15 @@ class pageSettingsState extends State<pageSettings> {
   void _fetchUserData() async {
     try {
       AuthService authService = AuthService();
-      var userData = await authService.getUserData();
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+
+      User? user = _auth.currentUser;
+      var userData = await authService.getUserData(user!.uid);
       setState(() {
         // Update the userName with the user's name from Firestore
         userEmail = userData['email'];
+        userProfile = userData['profile'];
+        fullName = userData['firstName'] + " " + userData['secondName'];
       });
     } catch (e) {
       // ignore: avoid_print
@@ -55,11 +63,11 @@ class pageSettingsState extends State<pageSettings> {
             children: [
               CircleAvatar(
                 radius: 50, // Adjust the size as needed
-                child: Icon(Icons.person),
+                backgroundImage: NetworkImage(userProfile ?? ""),
               ),
               SizedBox(height: 10),
               Text(
-                userEmail ?? "", // Display user name, if available
+                fullName ?? "", // Display user name, if available
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )
             ],

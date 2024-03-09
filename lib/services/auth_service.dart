@@ -74,13 +74,10 @@ class AuthService {
     return await _auth.signOut();
   }
 
-  Future<DocumentSnapshot> getUserData() async {
-    // Get the current user
-    User? user = _auth.currentUser;
-
+  Future<DocumentSnapshot> getUserData(String uid) async {
     // Get user data from Firestore
     DocumentSnapshot userData =
-        await _firestore.collection("Users").doc(user!.uid).get();
+        await _firestore.collection("Users").doc(uid).get();
     return userData;
   }
 

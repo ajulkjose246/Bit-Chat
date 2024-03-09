@@ -3,7 +3,6 @@ import 'package:bitchat/register/screenSignin.dart';
 import 'package:bitchat/register/screenSignup.dart';
 import 'package:bitchat/register/screenUserData.dart';
 import 'package:bitchat/register/userAuth.dart';
-import 'package:bitchat/themes/light_mode.dart';
 import 'package:bitchat/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
