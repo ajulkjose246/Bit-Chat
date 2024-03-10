@@ -58,7 +58,7 @@ class _pageChatListState extends State<pageChatList> {
         final currentUserEmail = _authService.getCurrentUser()?.email;
         if (currentUserEmail != email) {
           String fullName =
-              userData['firstName'] + " " + userData['secondName'];
+              userData['firstName']! + " " + userData['secondName']!;
           return UserTile(
             text: fullName,
             onTap: () {
@@ -68,6 +68,8 @@ class _pageChatListState extends State<pageChatList> {
                   builder: (context) => ChatPage(
                     receiverEmail: email,
                     receiverId: userData['uid'],
+                    receiverName: fullName,
+                    receiverProfile: userData["profile"],
                   ),
                 ),
               );

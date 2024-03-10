@@ -20,6 +20,7 @@ class screenSignupState extends State<screenSignup> {
   final emailController = TextEditingController();
   final firstNameController = TextEditingController();
   final secondNameController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
   Uint8List? _image;
@@ -30,9 +31,11 @@ class screenSignupState extends State<screenSignup> {
     if (passwordController.text == confirmpasswordController.text) {
       try {
         await authService.signUpWithEmailandPassword(
+            context,
             emailController.text,
             passwordController.text,
             firstNameController.text,
+            usernameController.text,
             secondNameController.text,
             _image!);
         // ignore: use_build_context_synchronously
@@ -143,6 +146,12 @@ class screenSignupState extends State<screenSignup> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 10),
+              myTextfield(
+                controller: usernameController,
+                hintText: "@Username",
+                obsecuredText: false,
               ),
               const SizedBox(height: 10),
               myTextfield(

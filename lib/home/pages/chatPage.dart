@@ -10,8 +10,14 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverId;
+  final String receiverName;
+  final String receiverProfile;
   const ChatPage(
-      {super.key, required this.receiverEmail, required this.receiverId});
+      {super.key,
+      required this.receiverEmail,
+      required this.receiverId,
+      required this.receiverName,
+      required this.receiverProfile});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -77,7 +83,21 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverEmail),
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 17,
+              backgroundImage: NetworkImage(widget.receiverProfile),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              widget.receiverName,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -92,33 +112,77 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   // build Message List
+  // build Message List
+  // build Message List
   Widget _buildMessageList() {
     String senderId = _authService.getCurrentUser()!.uid;
-    return StreamBuilder(
-      stream: _chatService.getMessages(widget.receiverId, senderId),
-      builder: (context, snapshot) {
-        //error
-        if (snapshot.hasError) {
-          return const Center(
-            child: Text("Error"),
-          );
+    bool _userScrollingUp = false; // Track whether user is scrolling up
+
+    return NotificationListener<ScrollNotification>(
+      onNotification: (scrollNotification) {
+        if (scrollNotification is ScrollStartNotification) {
+          // User starts scrolling
+          _userScrollingUp = true;
+        } else if (scrollNotification is ScrollEndNotification) {
+          // User stops scrolling
+          _userScrollingUp = false;
         }
-
-        //loading
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        //return list
-
-        return ListView(
-          controller: _scrollController,
-          children:
-              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
-        );
+        return false;
       },
+      child: StreamBuilder(
+        stream: _chatService.getMessages(widget.receiverId, senderId),
+        builder: (context, snapshot) {
+          //error
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Error"),
+            );
+          }
+
+          //loading
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          //return list
+          return ListView.builder(
+            controller: _scrollController,
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var doc = snapshot.data!.docs[index];
+              var data = doc.data() as Map<String, dynamic>;
+
+              //current user
+              bool isCurrentUser =
+                  data['senderId'] == _authService.getCurrentUser()!.uid;
+
+              // allignment
+              var allignment =
+                  isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+
+              // Scroll to bottom only if user is not scrolling up
+              if (!_userScrollingUp) {
+                WidgetsBinding.instance!.addPostFrameCallback((_) {
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeOut,
+                  );
+                });
+              }
+
+              //receiver user msg
+              return Container(
+                alignment: allignment,
+                child: chatBubble(
+                    message: data["message"], isCurrentUser: isCurrentUser),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

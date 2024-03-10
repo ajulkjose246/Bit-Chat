@@ -20,6 +20,7 @@ class pageSettingsState extends State<pageSettings> {
   String? userEmail;
   String? userProfile;
   String? fullName;
+  String? username;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class pageSettingsState extends State<pageSettings> {
         // Update the userName with the user's name from Firestore
         userEmail = userData['email'];
         userProfile = userData['profile'];
+        username = userData['username'];
         fullName = userData['firstName'] + " " + userData['secondName'];
       });
     } catch (e) {
@@ -65,10 +67,16 @@ class pageSettingsState extends State<pageSettings> {
                 radius: 50, // Adjust the size as needed
                 backgroundImage: NetworkImage(userProfile ?? ""),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 fullName ?? "", // Display user name, if available
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "@$username", // Display user name, if available
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               )
             ],
           ),

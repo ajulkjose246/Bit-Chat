@@ -1,8 +1,10 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AuthService {
   //insatnce of auth
@@ -24,11 +26,6 @@ class AuthService {
         email: email,
         password: password,
       );
-      //save user Info
-      _firestore.collection("Users").doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'email': email,
-      });
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -38,14 +35,36 @@ class AuthService {
 
   //sign up
   Future<UserCredential> signUpWithEmailandPassword(
+    BuildContext context,
     String email,
     String password,
     String firstname,
+    String username,
     String secondname,
     Uint8List file,
   ) async {
     try {
-      //sign in
+      // Check if email is already in use
+      QuerySnapshot emailSnapshot = await _firestore
+          .collection("Users")
+          .where("email", isEqualTo: email)
+          .get();
+
+      if (emailSnapshot.docs.isNotEmpty) {
+        throw Exception("Email already exists");
+      }
+
+      // Check if username is already in use
+      QuerySnapshot usernameSnapshot = await _firestore
+          .collection("Users")
+          .where("username", isEqualTo: username)
+          .get();
+
+      if (usernameSnapshot.docs.isNotEmpty) {
+        throw Exception("Username already exists");
+      }
+
+      // Sign up user
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -54,13 +73,14 @@ class AuthService {
 
       String imageUrl = await uploadImage(userCredential.user!.uid, file);
 
-      //save user Info
-      _firestore.collection("Users").doc(userCredential.user!.uid).set({
+      // Save user info
+      await _firestore.collection("Users").doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
         'firstName': firstname,
         'secondName': secondname,
         'profile': imageUrl,
+        'username': username, // Add username to user document
       });
 
       return userCredential;
@@ -68,6 +88,7 @@ class AuthService {
       throw Exception(e.code);
     }
   }
+
   //sign user out
 
   Future<void> signOut() async {
