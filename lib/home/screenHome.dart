@@ -37,29 +37,31 @@ class _screenHomeState extends State<screenHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromRGBO(221, 241, 238, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(36, 106, 128, 1),
-        title: const Text(
-          "Bit-Chat",
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+        // backgroundColor: const Color.fromRGBO(221, 241, 238, 1),
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(36, 106, 128, 1),
+          title: const Text(
+            "Bit-Chat",
+            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+          ),
         ),
-      ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: bottomNavBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (BuildContext context) {
-              return newChat();
-            },
-          );
-        },
-        child: const Icon(Icons.add_comment),
-      ),
-    );
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: bottomNavBar(),
+        floatingActionButton: _selectedIndex == 0
+            ? FloatingActionButton(
+                backgroundColor: const Color.fromRGBO(36, 106, 128, 1),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return newChat();
+                    },
+                  );
+                },
+                child: const Icon(Icons.add_comment),
+              )
+            : null);
   }
 
   Container bottomNavBar() {
