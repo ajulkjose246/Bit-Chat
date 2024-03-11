@@ -176,7 +176,11 @@ class _ChatPageState extends State<ChatPage> {
               return Container(
                 alignment: allignment,
                 child: chatBubble(
-                    message: data["message"], isCurrentUser: isCurrentUser),
+                  message: data["message"],
+                  isCurrentUser: isCurrentUser,
+                  messageTime: data["timestamp"],
+                  messageStatus: data["status"],
+                ),
               );
             },
           );

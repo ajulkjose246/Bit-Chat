@@ -50,7 +50,6 @@ class ChatService {
               .get();
 
           if (snapshot.docs.isNotEmpty) {
-            // print(chatroomId.split("_"));
             chatroomId.split("_").forEach((element) async {
               if (element != currentUserID) {
                 chatingUsersId.add(element);
@@ -93,6 +92,7 @@ class ChatService {
       receiverId: receiverId,
       message: message,
       timestamp: timestamp,
+      status: 1,
     );
 
     //create chat room
@@ -114,11 +114,33 @@ class ChatService {
     List<String> ids = [userId, otherUserId];
     ids.sort();
     String chatRoomId = ids.join('_');
+    updateMessageStatus(chatRoomId, otherUserId);
     return _firestore
         .collection("chat_rooms")
         .doc(chatRoomId)
         .collection("messages")
         .orderBy("timestamp", descending: false)
         .snapshots();
+  }
+
+  updateMessageStatus(String chatRoomId, String currentUserId) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .get();
+    for (var doc in snapshot.docs) {
+      if (doc.data()['senderId'] != currentUserId &&
+          doc.data()['status'] != 2) {
+        await _firestore
+            .collection('chat_rooms')
+            .doc(chatRoomId)
+            .collection('messages')
+            .doc(doc.id)
+            .update({
+          'status': 2,
+        });
+      }
+    }
   }
 }

@@ -51,6 +51,7 @@ class _appInfoState extends State<appInfo> {
               "Bit-Chat",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            // ignore: unnecessary_null_comparison
             _packageInfo != null
                 ? Text(
                     "Version ${_packageInfo.version}",
