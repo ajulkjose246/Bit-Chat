@@ -1,13 +1,13 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, use_key_in_widget_constructors
 
 import 'package:bitchat/components/myTextfield.dart';
 import 'package:bitchat/home/pages/chatPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class newChat extends StatelessWidget {
   TextEditingController userinfo = TextEditingController();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> sendNewChat(BuildContext context) async {
     try {

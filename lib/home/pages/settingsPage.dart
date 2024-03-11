@@ -103,6 +103,23 @@ class pageSettingsState extends State<pageSettings> {
             ],
           ),
         ),
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          margin: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("App info"),
+              IconButton(
+                  onPressed: () => Navigator.pushNamed(context, "info"),
+                  icon: const Icon(Icons.arrow_forward_ios_outlined))
+            ],
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(

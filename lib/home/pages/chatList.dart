@@ -15,9 +15,16 @@ class _pageChatListState extends State<pageChatList> {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
+  Future<void> _refresh() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _buildUserList();
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: _buildUserList(),
+    );
   }
 
   Widget _buildUserList() {

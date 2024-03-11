@@ -1,4 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:bitchat/home/pages/appInfo.dart';
+import 'package:bitchat/home/pages/chatList.dart';
 import 'package:bitchat/register/screenIntro.dart';
 import 'package:bitchat/register/screenSignin.dart';
 import 'package:bitchat/register/screenSignup.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
         'signUp': (context) => const screenSignup(),
         'userData': (context) => const screenUserData(),
         'auth': (context) => const userAuth(),
+        'home': (context) => const pageChatList(),
+        'info': (context) => const appInfo(),
       },
       initialRoute: 'auth',
     );
