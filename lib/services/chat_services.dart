@@ -1,35 +1,81 @@
 import 'package:bitchat/modules/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class ChatService {
   //firebase instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<String> chatingUsersId = [];
 
-  //User Stream
-  Stream<List<Map<String, dynamic>>> getUsersStream() {
-    /*
-    <List<Map<String,dynamic>>>
-    [
-      {
-        'email' : test@example.com,
-        'id' : ..
-      },
-      {
-        'email' : test@example.com,
-        'id' : ..
-      },
-    ]
-    */
-    return _firestore.collection('Users').snapshots().map((snapshot) {
-      //return user
-      return snapshot.docs.map((doc) {
-        final user = doc.data();
-        return user;
-      }).toList();
+  // User Stream
+  Stream<List<Map<String, dynamic>>> getUsersStream(String currentUser) {
+    // Call getMessagesForCurrentUser only once and wait for it to complete
+    return _firestore
+        .collection('Users')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      await getMessagesForCurrentUser(
+          currentUser); // Wait for this to complete before proceeding
+
+      // Filter snapshot.docs based on chatingUsersId
+      List<Map<String, dynamic>> usersData = snapshot.docs
+          .where((doc) => chatingUsersId.contains(doc.id))
+          .map((doc) => doc.data())
+          .toList();
+
+      // Return user data
+      return usersData;
     });
+  }
+
+  Future<void> getMessagesForCurrentUser(String currentUserID) async {
+    try {
+      if (chatingUsersId.isEmpty) {
+        // Check if chatingUsersId is empty before proceeding
+        List<String> userIDs = await getAllUserIDs();
+        List<String> chatroomids = [];
+
+        for (var uid in userIDs) {
+          if (uid != currentUserID) {
+            chatroomids.add('${currentUserID}_$uid');
+            chatroomids.add('${uid}_$currentUserID');
+          }
+        }
+        for (var chatroomId in chatroomids) {
+          QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+              .collection('chat_rooms')
+              .doc(chatroomId)
+              .collection('messages')
+              .get();
+
+          if (snapshot.docs.isNotEmpty) {
+            // print(chatroomId.split("_"));
+            chatroomId.split("_").forEach((element) async {
+              if (element != currentUserID) {
+                chatingUsersId.add(element);
+              }
+            });
+          }
+        }
+      }
+    } catch (e) {
+      print('Error fetching messages: $e');
+    }
+  }
+
+  Future<List<String>> getAllUserIDs() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance.collection('Users').get();
+
+      List<String> userIDs = snapshot.docs.map((doc) => doc.id).toList();
+
+      return userIDs;
+    } catch (e) {
+      print('Error fetching user IDs: $e');
+      return [];
+    }
   }
 
   //send msg

@@ -22,7 +22,7 @@ class _pageChatListState extends State<pageChatList> {
 
   Widget _buildUserList() {
     return StreamBuilder(
-      stream: _chatService.getUsersStream(),
+      stream: _chatService.getUsersStream(_authService.getCurrentUser()!.uid),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(
@@ -31,7 +31,7 @@ class _pageChatListState extends State<pageChatList> {
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: Text("Loading"),
+            child: CircularProgressIndicator(),
           );
         }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {

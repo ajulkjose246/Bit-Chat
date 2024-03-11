@@ -4,7 +4,6 @@ import 'package:bitchat/components/chat_bubble.dart';
 import 'package:bitchat/components/myTextfield.dart';
 import 'package:bitchat/services/auth_service.dart';
 import 'package:bitchat/services/chat_services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -112,8 +111,6 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   // build Message List
-  // build Message List
-  // build Message List
   Widget _buildMessageList() {
     String senderId = _authService.getCurrentUser()!.uid;
     bool _userScrollingUp = false; // Track whether user is scrolling up
@@ -164,12 +161,14 @@ class _ChatPageState extends State<ChatPage> {
 
               // Scroll to bottom only if user is not scrolling up
               if (!_userScrollingUp) {
-                WidgetsBinding.instance!.addPostFrameCallback((_) {
-                  _scrollController.animateTo(
-                    _scrollController.position.maxScrollExtent,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeOut,
-                  );
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    _scrollController.animateTo(
+                      _scrollController.position.maxScrollExtent,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                    );
+                  });
                 });
               }
 
@@ -187,23 +186,6 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   //build Message Item
-  Widget _buildMessageItem(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
-    //current user
-    bool isCurrentUser = data['senderId'] == _authService.getCurrentUser()!.uid;
-
-    // allignment
-    var allignment =
-        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-
-    //reciver user msg
-
-    return Container(
-      alignment: allignment,
-      child: chatBubble(message: data["message"], isCurrentUser: isCurrentUser),
-    );
-  }
 
   //builder msg input
   Widget _buildUserInput() {

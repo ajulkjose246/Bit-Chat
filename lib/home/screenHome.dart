@@ -1,9 +1,11 @@
 // ignore_for_file: file_names
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bitchat/home/pages/chatList.dart';
 import 'package:bitchat/home/pages/settingsPage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // ignore: camel_case_types
 class screenHome extends StatefulWidget {
@@ -17,14 +19,18 @@ class screenHome extends StatefulWidget {
 class _screenHomeState extends State<screenHome> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
   static const List<Widget> _widgetOptions = <Widget>[
     pageChatList(),
-    Text(
-      'Likes',
-    ),
-    Text(
-      'Profile',
-    ),
     pageSettings(),
   ];
 
@@ -41,6 +47,10 @@ class _screenHomeState extends State<screenHome> {
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: bottomNavBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add_comment),
+      ),
     );
   }
 
@@ -76,14 +86,6 @@ class _screenHomeState extends State<screenHome> {
               GButton(
                 icon: Icons.chat_rounded,
                 text: 'Chats',
-              ),
-              GButton(
-                icon: Icons.home,
-                text: 'Likes',
-              ),
-              GButton(
-                icon: Icons.person,
-                text: 'Profile',
               ),
               GButton(
                 icon: Icons.settings,

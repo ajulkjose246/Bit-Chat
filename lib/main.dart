@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bitchat/register/screenIntro.dart';
 import 'package:bitchat/register/screenSignin.dart';
 import 'package:bitchat/register/screenSignup.dart';
@@ -10,6 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
+  AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+          channelKey: "bit_chat_notification_channel",
+          channelName: "Basic Notifications",
+          channelDescription: "notification channel description",
+        )
+      ],
+      debug: true);
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -32,11 +43,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => screenIntro(),
-        'signIn': (context) => screenSignin(),
-        'signUp': (context) => screenSignup(),
-        'userData': (context) => screenUserData(),
-        'auth': (context) => userAuth(),
+        '/': (context) => const screenIntro(),
+        'signIn': (context) => const screenSignin(),
+        'signUp': (context) => const screenSignup(),
+        'userData': (context) => const screenUserData(),
+        'auth': (context) => const userAuth(),
       },
       initialRoute: 'auth',
     );
