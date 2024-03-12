@@ -150,6 +150,11 @@ class _ChatPageState extends State<ChatPage> {
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
               var data = doc.data() as Map<String, dynamic>;
+              List<String> ids = [senderId, widget.receiverId];
+              ids.sort();
+
+              String chatRoomId = ids.join('_');
+              _chatService.updateMessageStatus(chatRoomId, senderId);
 
               //current user
               bool isCurrentUser =

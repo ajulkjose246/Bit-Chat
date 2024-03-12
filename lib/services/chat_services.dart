@@ -109,13 +109,17 @@ class ChatService {
   }
   //receive msg
 
-  Stream<QuerySnapshot> getMessages(String userId, otherUserId) {
-    //create a new chatroom id for the 2 users
+  Stream<QuerySnapshot> getMessages(String userId, otherUserId) async* {
+    // Create a new chatroom id for the 2 users
     List<String> ids = [userId, otherUserId];
     ids.sort();
     String chatRoomId = ids.join('_');
-    updateMessageStatus(chatRoomId, otherUserId);
-    return _firestore
+
+    // Update message status
+    await updateMessageStatus(chatRoomId, otherUserId);
+
+    // Return the stream
+    yield* _firestore
         .collection("chat_rooms")
         .doc(chatRoomId)
         .collection("messages")

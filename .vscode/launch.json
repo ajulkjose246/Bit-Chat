@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "bitchat",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "Android-1",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "17e1a8f27d29"
+        },
+        {
+            "name": "Android-2",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "dab4a8e8"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": ["Android-1", "Android-2"]
+        }
+    ]
+}
