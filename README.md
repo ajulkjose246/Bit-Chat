@@ -18,4 +18,4 @@ Bit-Chat is an innovative real-time chat application for Android devices, offeri
 
 ## Project Repository
 
-The source code for Bit-Chat is available on [GitHub](https://github.com/your-username/bit-chat), allowing developers to explore the implementation details and contribute to the project's growth.
+The source code for Bit-Chat is available on [GitHub](https://github.com/ajulkjose246/bit-chat), allowing developers to explore the implementation details and contribute to the project's growth.
