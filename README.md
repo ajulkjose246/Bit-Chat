@@ -1,6 +1,6 @@
 # Bit-Chat: Real-Time Android Chat Application
 
-<img src="https://firebasestorage.googleapis.com/v0/b/perosnal-website-5831b.appspot.com/o/Projects%2FImages%2FBit-Chat.png?alt=media&token=df6e6c35-11a3-4b37-a250-b649cc6d1824" alt="Bit-Chat Logo" width="200"/>
+<img src="https://firebasestorage.googleapis.com/v0/b/perosnal-website-5831b.appspot.com/o/Projects%2FImages%2Fbit-chat.png?alt=media&token=df6e6c35-11a3-4b37-a250-b649cc6d1824" alt="Bit-Chat Logo" width="200"/>
 
 Bit-Chat is an innovative real-time chat application for Android devices, offering a seamless and interactive communication experience. Leveraging the robust Firebase Firestore platform, Bit-Chat provides a highly responsive and reliable messaging environment, enabling users to connect and converse instantly.
 
