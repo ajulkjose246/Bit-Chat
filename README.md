@@ -18,7 +18,7 @@ Bit-Chat is an innovative real-time chat application for Android devices, offeri
 </div>
 
 <!-- Download All Button -->
-## Bit-Wall: Screenshots
+## Bit-Wall: Download
 
 <a href="https://drive.google.com/file/d/1xb9Wd1Mg-StZ52myJsPbZCAvjCu9wFA0/view?usp=sharing" download style="display: block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: #fff; text-align: center; text-decoration: none; border-radius: 5px; cursor: pointer;">
     Download App
